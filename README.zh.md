@@ -54,7 +54,7 @@
 4. 訓練完成後，使用手繪界面測試模型
 5. 訓練目標 測試正確率超過預訓練模型(99.38%)
 
-![Screen](https://microchi.github.io/MNISTVueDemo/screen.gif)
+![Screen](screen.gif)
 
 ## 技術堆疊
 

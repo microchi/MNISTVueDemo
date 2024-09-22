@@ -56,7 +56,7 @@ This project demonstrates how to train and deploy an MNIST handwritten digit rec
 4. After training is complete, test the model using the hand-drawing interface.
 5. Aim for a test accuracy higher than the pre-trained model (99.38%).
 
-![Screen](https://microchi.github.io/MNISTVueDemo/screen.gif)
+![Screen](screen.gif)
 
 ## Tech Stack
 
