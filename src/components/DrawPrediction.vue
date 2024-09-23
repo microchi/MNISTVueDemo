@@ -48,7 +48,7 @@
 
   // 監控手繪圖片變化
   watch(DrawingImage, () => {
-    if (model === null) return;
+    if (window.model === null) return;
 
     // 若 手繪圖片為空 則 清除即時預測圖表
     if (VueCanvasDrawing.value.isEmpty()) {
@@ -62,7 +62,7 @@
       // tf.scalar(1).sub 表示用 1 塑造出的張量 1 減掉像素值 是讓圖像反轉 白轉黑 黑轉白
       // tf.browser.fromPixels(img, 1) 將圖像轉換為張量 1 表示灰度圖像
       // .toFloat().div(255) 將圖像值介於 0~255 之間的張量轉換為 0~1 之間的張量
-      const result = model.predict(tf.reshape(tf.scalar(1).sub(tf.browser.fromPixels(myImage, 1).toFloat().div(255)), [1, 28, 28, 1])).dataSync();
+      const result = window.model.predict(tf.reshape(tf.scalar(1).sub(tf.browser.fromPixels(myImage, 1).toFloat().div(255)), [1, 28, 28, 1])).dataSync();
 
       predictChart.setOption({ series: [{ data: Array.from(result) }] }); // 更新即時預測圖表
     };

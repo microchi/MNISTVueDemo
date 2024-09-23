@@ -27,12 +27,12 @@
 
   // 損失圖表參數
   const chartOption = {
-    title: { left: 'center' },
+    title: { left: '30%' },
     xAxis: { type: 'value', name: '批次', boundaryGap: false, scale: true },
     yAxis: { type: 'value', scale: true },
     tooltip: { trigger: 'axis' },
-    legend: { data: ['訓練', '驗證'], right: '10px' },
-    grid: { bottom: '30px' },
+    legend: { data: ['訓練', '驗證'], right: 5 },
+    grid: { bottom: 30, right: 50 },
     series: [
       { name: '訓練', type: 'line', showSymbol: false },
       {

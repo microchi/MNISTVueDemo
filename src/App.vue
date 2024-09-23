@@ -4,37 +4,38 @@
   <Panel header="超參數" toggleable class="m-1">
     <div class="flex flex-wrap">
       <div class="w-12 xl:w-6 p-1">
-        <div class="flex align-items-center border-1 border-round">
+        <div class="flex align-items-center border-1 border-round my-1">
           <label class="p-1">模型類型</label>
-          <SelectButton v-model="ModelType" :options="ModelTypeOpetions" optionLabel="label" :allowEmpty="false" :disabled="IsTaining" />
+          <SelectButton v-model="ModelType" :options="ModelTypeOpetions" optionLabel="label" :allowEmpty="false" :disabled="IsTaining" class="flex-wrap" />
         </div>
-        <div class="flex align-items-center border-1 border-round">
+        <div class="flex align-items-center border-1 border-round my-1">
           <label class="p-1">權重優化器</label>
-          <SelectButton v-model="Optimizer" :options="OptimizerOpetions" :allowEmpty="false" :disabled="IsTaining" />
+          <SelectButton v-model="Optimizer" :options="OptimizerOpetions" :allowEmpty="false" :disabled="IsTaining" class="flex-wrap" />
         </div>
-        <div class="flex align-items-center border-1 border-round">
+        <div class="flex flex-wrap align-items-center border-1 border-round">
+          <ToggleButton v-model="IsCPU" onIcon="pi pi-bolt" offIcon="pi pi-microchip-ai" class="w-12rem" onLabel="使用CPU訓練" offLabel="使用WebGL訓練" :disabled="IsTaining" />
           <ToggleButton v-model="IsShuffle" onIcon="pi pi-check" offIcon="pi pi-times" class="w-7rem" onLabel="洗牌" offLabel="不洗牌" :disabled="IsTaining" />
           <ToggleButton v-model="IsBatchNormalization" onIcon="pi pi-check" offIcon="pi pi-times" class="w-10rem" onLabel="批次標準化" offLabel="不標準化" :disabled="IsTaining" />
           <ToggleButton v-model="IsDropOut" onIcon="pi pi-check" offIcon="pi pi-times" class="w-10rem" onLabel="丟棄部分神經" offLabel="不丟棄神經" :disabled="IsTaining" />
           <ToggleButton v-model="IsMaxPooling" onIcon="pi pi-check" offIcon="pi pi-times" class="w-8rem" onLabel="最大池化" offLabel="不池化" :disabled="IsTaining" />
         </div>
-        <div class="flex align-items-center border-1 border-round">
-          <label class="p-1">驗證比率</label>
-          <InputNumber v-model="ValidationSplit" showButtons buttonLayout="horizontal" suffix="%" :min="0" :max="100" :disabled="IsTaining">
+        <div class="flex align-items-center border-1 border-round my-1">
+          <label class="p-1 white-space-nowrap">驗證比率</label>
+          <InputNumber v-model="ValidationSplit" showButtons buttonLayout="horizontal" suffix="%" :min="0" :max="100" :disabled="IsTaining" fluid>
             <template #incrementbuttonicon> <span class="pi pi-plus" /> </template>
             <template #decrementbuttonicon> <span class="pi pi-minus" /> </template>
           </InputNumber>
         </div>
-        <div class="flex align-items-center border-1 border-round">
-          <label class="p-1">批次大小數</label>
-          <InputNumber v-model="BatchSize" showButtons buttonLayout="horizontal" :min="1" :max="100" :disabled="IsTaining">
+        <div class="flex align-items-center border-1 border-round my-1">
+          <label class="p-1 white-space-nowrap">批次數量</label>
+          <InputNumber v-model="BatchSize" showButtons buttonLayout="horizontal" :min="1" :max="100" :disabled="IsTaining" fluid>
             <template #incrementbuttonicon> <span class="pi pi-plus" /> </template>
             <template #decrementbuttonicon> <span class="pi pi-minus" /> </template>
           </InputNumber>
         </div>
-        <div class="flex align-items-center border-1 border-round">
-          <label class="p-1">訓練世代數</label>
-          <InputNumber v-model="Epochs" showButtons buttonLayout="horizontal" :min="1" :max="100" :disabled="IsTaining">
+        <div class="flex align-items-center border-1 border-round my-1">
+          <label class="p-1 white-space-nowrap">訓練世代</label>
+          <InputNumber v-model="Epochs" showButtons buttonLayout="horizontal" :min="1" :max="100" :disabled="IsTaining" fluid>
             <template #incrementbuttonicon> <span class="pi pi-plus" /> </template>
             <template #decrementbuttonicon> <span class="pi pi-minus" /> </template>
           </InputNumber>
@@ -56,14 +57,14 @@
         </DataTable>
       </div>
     </div>
-    <div class="flex align-items-center">
-      <Button class="mx-1" icon="pi pi-play-circle" label="開始訓練" @click="Training" :disabled="IsTaining" size="small" />
-      <Button class="mx-1" icon="pi pi-save" label="暫存模型" @click="Save" :disabled="IsTaining" size="small" />
-      <Button class="mx-1" icon="pi pi-upload" label="載入暫存模型" @click="Load" :disabled="IsTaining" size="small" />
-      <tag class="mx-1" :value="`目前世代:${EpochCount}`" severity="warn" />
-      <tag class="mx-1" :value="`訓練批次:${TrainBatchCount}/${TotalBatchCount}(${((TrainBatchCount / TotalBatchCount) * 100).toFixed(1)}%)`" />
-      <tag class="mx-1" :value="`驗證正確率:${ValidationAccuracy}%`" severity="success" />
-      <tag class="mx-1" :value="`測試正確率:${TestAccuracy}%`" severity="success" /> <= 訓練目標測試正確率超過99.38%
+    <div class="flex flex-wrap align-items-center">
+      <Button class="m-1" icon="pi pi-play-circle" label="開始訓練" @click="Training" :disabled="IsTaining" size="small" />
+      <Button class="m-1" icon="pi pi-save" label="暫存模型" @click="Save" :disabled="IsTaining" size="small" />
+      <Button class="m-1" icon="pi pi-upload" label="載入暫存模型" @click="Load" :disabled="IsTaining" size="small" />
+      <tag class="m-1" :value="`目前世代:${EpochCount}`" severity="warn" />
+      <tag class="m-1" :value="`訓練批次:${TrainBatchCount}/${TotalBatchCount}(${((TrainBatchCount / TotalBatchCount) * 100).toFixed(1)}%)`" />
+      <tag class="m-1" :value="`驗證正確率:${ValidationAccuracy}%`" severity="success" />
+      <tag class="m-1" :value="`測試正確率:${TestAccuracy}%`" severity="success" /> <= 訓練目標測試正確率超過99.38%
     </div>
   </Panel>
   <LossAccuracy ref="LossAccuracyComponent" />
@@ -72,7 +73,7 @@
 </template>
 
 <script setup>
-  import { ref, nextTick, watch, onMounted } from 'vue';
+  import { ref, watch, onMounted } from 'vue';
   import UtilityService from './services/UtilityService';
   import DataService from './services/DataService';
   import ModelService from './services/ModelService';
@@ -96,6 +97,7 @@
   const OptimizerOpetions = ref(['sgd', 'adagrad', 'adadelta', 'adam', 'adamax', 'rmsprop']);
   const Optimizer = ref('sgd'); // 權重優化器
 
+  const IsCPU = ref(false); // 是否使用CPU訓練
   const IsShuffle = ref(false); // 是否洗牌
   const IsDropOut = ref(false); // 是否丟棄部分神經元
   const IsBatchNormalization = ref(false); // 是否使用批次標準化
@@ -134,6 +136,12 @@
 
   // 開始訓練
   const Training = async () => {
+    // 若 使用CPU訓練且選擇卷積神經網路時 則 提示
+    if (IsCPU.value && ModelType.value == ModelTypeOpetions.value[1]) {
+      ModelType.value = ModelTypeOpetions.value[0];
+      return Alert('使用CPU訓練時跑不動ConvNet 卷積神經網路,請選擇DenseNet模型進行訓練!');
+    }
+
     IsTaining.value = true;
     ModelSummary.value = null;
 
@@ -162,44 +170,52 @@
     ValidationAccuracy.value = 0.0; // 驗證正確率
     TestAccuracy.value = 0.0; // 測試正確率
 
+    tf.setBackend(IsCPU.value ? 'cpu' : 'webgl'); // 設定後端
+
     // 訓練
-    await model.fit(trainImages, trainLabels, {
-      shuffle: IsShuffle.value, // 洗牌
-      batchSize: BatchSize.value, // 批次大小
-      validationSplit, // 訓練資料驗證比例
-      epochs: Epochs.value, // 訓練世代
-      callbacks: {
-        // 批次完成
-        onBatchEnd: async (batch, logs) => {
-          TrainBatchCount.value++;
+    model
+      .fit(trainImages, trainLabels, {
+        shuffle: IsShuffle.value, // 洗牌
+        batchSize: BatchSize.value, // 批次大小
+        validationSplit, // 訓練資料驗證比例
+        epochs: Epochs.value, // 訓練世代
+        callbacks: {
+          // 批次完成
+          onBatchEnd: async (batch, logs) => {
+            TrainBatchCount.value++;
 
-          if (batch % 10 === 0) {
-            LossAccuracyComponent.value.PlotLossAccuracy(TrainBatchCount.value, logs.loss, logs.acc * 100); // 繪製損失正確率圖表
+            if (batch % 10 === 0) {
+              LossAccuracyComponent.value.PlotLossAccuracy(TrainBatchCount.value, logs.loss, logs.acc * 100); // 繪製損失正確率圖表
+              tf.tidy(() => examplePrediction()); // 釋放張量 後 更新測試範例預測結果
+            }
+
+            await tf.nextFrame(); // 等待下一幀
+          },
+          // 世代完成
+          onEpochEnd: async (epoch, logs) => {
+            EpochCount.value++;
+
+            ValidationAccuracy.value = (logs.val_acc * 100).toFixed(3); // 驗證正確率
+
+            TestAccuracy.value = (model.evaluate(DataService.GetTestImages(), DataService.GetTestLabels())[1].dataSync()[0] * 100).toFixed(3); // 測試資料正確率
+
+            LossAccuracyComponent.value.PlotLossAccuracy(TrainBatchCount.value, logs.val_loss, logs.val_acc * 100, false); // 繪製損失正確率圖表
+
             tf.tidy(() => examplePrediction()); // 釋放張量 後 更新測試範例預測結果
-          }
 
-          await tf.nextFrame(); // 等待下一幀
+            if (EpochCount.value === 3) LossAccuracyComponent.value.SpliceLossTrain(); // 刪除損失正確率圖表數據
+
+            await tf.nextFrame(); // 等待下一幀
+          },
         },
-        // 世代完成
-        onEpochEnd: async (epoch, logs) => {
-          EpochCount.value++;
-
-          ValidationAccuracy.value = (logs.val_acc * 100).toFixed(3); // 驗證正確率
-
-          TestAccuracy.value = (model.evaluate(DataService.GetTestImages(), DataService.GetTestLabels())[1].dataSync()[0] * 100).toFixed(3); // 測試資料正確率
-
-          LossAccuracyComponent.value.PlotLossAccuracy(TrainBatchCount.value, logs.val_loss, logs.val_acc * 100, false); // 繪製損失正確率圖表
-
-          tf.tidy(() => examplePrediction()); // 釋放張量 後 更新測試範例預測結果
-
-          if (EpochCount.value === 3) LossAccuracyComponent.value.SpliceLossTrain(); // 刪除損失正確率圖表數據
-
-          await tf.nextFrame(); // 等待下一幀
-        },
-      },
-    });
-
-    IsTaining.value = false;
+      })
+      .then(() => Alert('訓練完成!可在下方手繪區查看即時預測結果.', null, 'success', 999999))
+      .catch((o) => {
+        IsCPU.value = true;
+        ModelType.value = ModelTypeOpetions.value[0];
+        Alert('訓練失敗!\n請改用CPU再次進行訓練.', o.message, 'error', 999999);
+      })
+      .finally(() => (IsTaining.value = false));
   };
 
   // 暫存模型
@@ -224,7 +240,7 @@
 
       return tf.loadLayersModel('pretraining/pretraining.json');
     })
-    .then((o) => {
+    .then(async (o) => {
       window.model = o;
 
       summary(); // 載入模型摘要
@@ -233,6 +249,6 @@
       TestExamplesPredictions.value = Array.from(model.predict(testExampleImages).argMax(1).dataSync()); // 測試資料預測標籤
       TestExampleImages.value = testExampleImages;
 
-      Alert('預訓練模型已載入!');
+      Alert('預訓練模型已載入!\n可在下方手繪區查看即時預測結果,或調整超參數開始訓練模型.', null, 'success', 999999);
     });
 </script>
